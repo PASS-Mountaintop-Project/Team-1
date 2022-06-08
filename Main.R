@@ -23,6 +23,7 @@ write.csv(FIVE_CASTHMA, file="PASS_Files/PASS_500Cities_Current_Asthma.csv")
 for (type in types) {
   if (type == "CASTHMA") {
     PLACES_TEMP <- dplyr::filter(PLACES_DATA, MeasureId=="CASTHMA")
+    PLACES_TEMP <- subset(PLACES_TEMP, select=-c(Category, CategoryID))
   }
   else {
     PLACES_TEMP = dplyr::filter(PLACES_DATA, CategoryID==type)
@@ -48,20 +49,3 @@ for (i in 1:length(files)) {
   }
   dataSets[[i]] <- tDataSet
 }
-
-
-
-
-
-# row.names(tempData) <- 1:nrow(tempData)
-# for (i in 1:nrow(tempData)) {
-#   print(i)
-#   print (tempData[c(i), c(1)])
-#   print (!is.null(tempData[c(i),c(1)]) & tempData[c(i), c(1)] != "PA")
-#   
-#   if (!is.null(tempData[c(i), c(1)]) & tempData[c(i), c(1)] != "PA") {
-#     print("entered")
-#     tempData <- tempData[-c(i),]
-#   }
-# }
-
