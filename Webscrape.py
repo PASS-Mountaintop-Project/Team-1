@@ -72,7 +72,7 @@ print("Years:")
 print (years)
 
 
-#NOTE: Ones that often give trouble:
+#NOTE: Ones that often give trouble (For debugging purposes):
 #2017 == 14
 #2008 == 5
 #2014 == 11
