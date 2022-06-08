@@ -34,3 +34,9 @@
 # else:
 #     # URL = BASEURL + re.sub("default.htm", tables[j], links[properIndex])
 #     URL = BASEURL + links[properIndex].replace("default.htm", tables[j])
+
+
+#NOTE: Camelot, tabula
+# tables.export("C:/Mountaintop/Yearly_Asthma_Files/2017/RaceEth.csv", f="csv", compress=True)
+#Converting pdf into CSV file w/ same name
+# tabula.convert_into(newURL + ".pdf", newURL + ".csv", lattice=True, pages="all")
