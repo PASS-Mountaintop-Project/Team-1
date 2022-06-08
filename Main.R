@@ -33,9 +33,35 @@ for (type in types) {
 
 
 
+files <- list.files(path = "C:/Mountaintop/Yearly_Asthma_Files", full.names = TRUE)
 
 
 
-files <- list.files(path = "C:/Mountaintop", pattern = "_Files{1}$")
 
+dataSets <- list()
+tDataSet <- list()
+for (i in 1:length(files)) {
+  csvFiles <- list.files(path = files[i], full.names = TRUE, pattern = ".csv$")
+  for (j in 1:length(csvFiles)) {
+    print(csvFiles[j])
+    tDataSet[[j]] <- read.csv(csvFiles[j], header=FALSE)
+  }
+  dataSets[[i]] <- tDataSet
+}
+
+
+
+
+
+# row.names(tempData) <- 1:nrow(tempData)
+# for (i in 1:nrow(tempData)) {
+#   print(i)
+#   print (tempData[c(i), c(1)])
+#   print (!is.null(tempData[c(i),c(1)]) & tempData[c(i), c(1)] != "PA")
+#   
+#   if (!is.null(tempData[c(i), c(1)]) & tempData[c(i), c(1)] != "PA") {
+#     print("entered")
+#     tempData <- tempData[-c(i),]
+#   }
+# }
 

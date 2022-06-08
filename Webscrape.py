@@ -3,6 +3,40 @@ import re
 import tabula
 from urllib.request import urlretrieve  #NOTE: urllib is in standard library
 from bs4 import BeautifulSoup
+import camelot #NOTE: Requires Ghostscript and Tkinter to be installed
+import pandas as pd
+
+def useCamelot(pdfURL, filePath):
+    try:
+        print("ERROR ----> Tabula messed up, trying Camelot...")
+        tables = camelot.read_pdf(pdfURL, pages="all", multiple_tables=False)
+        print("Total tables extracted:", tables.n)
+
+        df = pd.concat([tables[i].df for i in range(tables.n)])
+        df.reset_index(drop=True, inplace=True)
+        df = df.replace([r'\n'],'', regex=True)
+        df.to_csv(filePath, index=False)
+
+        print("Camelot success!")
+        return 1
+    except:
+        print("ERROR ----> Camelot failed")
+        return 0
+
+def useTabula(pdfURL, filePath):
+    print("Trying Tabula...")
+    try:
+        table = tabula.read_pdf(pdfURL, pages="all", lattice=True, multiple_tables=False)
+        df = table[0]
+        if (df.iloc[:, 0].isnull().values.any()):
+            return useCamelot(pdfURL, filePath)  #If Tabula messes up, use Camelot (slower, but more accurate)
+        else:
+            df.to_csv(filePath, index=False)
+            print("Tabula success!")
+            return 1
+    except:
+        return useCamelot(pdfURL, filePath)
+
 
 URL = "https://www.cdc.gov/asthma/brfss/default.htm"
 BASEURL = "https://www.cdc.gov"
@@ -37,7 +71,13 @@ print (links)
 print("Years:")
 print (years)
 
-#Iterate through every viable year (2003-2019)
+
+#NOTE: Ones that often give trouble:
+#2017 == 14
+#2008 == 5
+#2014 == 11
+
+#Iterate through every viable year (2003-2019; e.g. range(0, len(years)))
 for i in range(0, len(years)):
     for j in range (0, len(tables)):
         #Finding link for data table
@@ -49,7 +89,7 @@ for i in range(0, len(years)):
         else:
             URL = BASEURL + links[properIndex].replace("default.htm", tables[j])
         
-        #New pdf/CSV file name and location on local drive
+        #New pdf/CSV file name and location on local drive (NOTE: change if necessary)
         newURL = "C:/Mountaintop/Yearly_Asthma_Files/" + years[len(years) - i - 1] + "/" + names[j]
 
         #Printing info (for debugging)
@@ -61,10 +101,10 @@ for i in range(0, len(years)):
         tempPage = requests.get(URL)
 
         if (tempPage.status_code == 200): #If webpage responded successfully
-            print("Reached webpage!")
+            print("Reached webpage!") #Print for debugging
         else: #Specifically for 2015 (html is weird)
             URL = URL.replace("html", "htm")
-            print("ERROR --------> New URL:\t" + URL)
+            print("ERROR --------> New URL:\t" + URL) #Print for debugging
             tempPage = requests.get(URL)
 
         #Use BeautifulSoup to read in html of webpage
@@ -79,5 +119,4 @@ for i in range(0, len(years)):
         #Downloading pdf onto local drive
         urlretrieve(URL, str(newURL + ".pdf"))
         
-        #Converting pdf into CSV file w/ same name
-        tabula.convert_into(newURL + ".pdf", newURL + ".csv", lattice=True, pages="all")
+        useTabula(newURL + ".pdf", newURL + ".csv")

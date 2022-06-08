@@ -1,16 +1,33 @@
-import pdfkit
+import camelot #Requires Ghostscript and Tkinter to be installed
+import pandas as pd
 import tabula
-from wkhtmltopdf.utils import wkhtmltopdf
-#path_wkhtmltopdf = r'C:\Python310\wkhtmltopdf\bin\wkhtmltopdf.exe'
-#config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
-URL = "https://www.cdc.gov/asthma/brfss/2012/tableL3.htm"
-
-pages = [2, 2, 15, 10, (12, 13), (10, 11), (12-14)]
-
-wkhtmltopdf("https://www.cdc.gov/asthma/brfss/2012/tableL3.htm", output="work.pdf")
+# import requests
+# from urllib.request import urlretrieve  #NOTE: urllib is in standard library
+# from bs4 import BeautifulSoup
+URL = "C:/Mountaintop/Yearly_Asthma_Files/08/RaceEth.pdf"
+path = "C:/Mountaintop/Yearly_Asthma_Files/08/RaceEth.csv"
 
 
-#wkhtmltopdf.wkhtmltopdf(url = "https://www.cdc.gov/asthma/brfss/2012/tableL3.htm", output_file = "Hello.pdf")
+table = tabula.read_pdf(URL, pages="all", lattice=True, multiple_tables=False)
+df = table[0]
 
-# pdfkit.from_url(URL, "yo.pdf", configuration=config)
-# tabula.convert_into("yo.pdf", "fff.csv", output_format="csv", lattice=True, pages="all")
+if (isinstance(df, pd.DataFrame)):
+    print("df is pandas")
+
+print(df.iloc[:, 0])
+
+#Converting pdf into CSV file w/ same name
+#tabula.convert_into(URL, path, lattice=True, pages="all")
+
+if (df.iloc[:, 0].isnull().values.any()):
+    print("ERROR ----> Tabula messed up, trying Camelot")
+    tables = camelot.read_pdf(URL, pages="all", multiple_tables=False)
+    print("Total tables extracted:", tables.n)
+    # tables.export("C:/Mountaintop/Yearly_Asthma_Files/2017/RaceEth.csv", f="csv", compress=True)
+
+    dataFrame = pd.concat([tables[i].df for i in range(tables.n)])
+    dataFrame.reset_index(drop=True, inplace=True)
+    dataFrame = dataFrame.replace([r'\n'],'', regex=True)
+    dataFrame.to_csv(path, index=False)
+else:
+    df.to_csv(path, index=False)
