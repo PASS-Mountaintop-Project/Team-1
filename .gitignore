@@ -2,3 +2,12 @@
 .Rhistory
 .RData
 .Ruserdata
+BRFSS_Files
+EDDIE_Files
+PASS_Files
+PLACES_Files
+Yearly_Asthma_Files
+WebInfo.html
+Archive.py
+Sort_CensusTract.R
+.gitignore
