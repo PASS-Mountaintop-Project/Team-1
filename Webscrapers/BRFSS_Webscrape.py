@@ -78,7 +78,7 @@ print (years)
 #2014 == 11
 
 #Iterate through every viable year (2003-2019; e.g. range(0, len(years)))
-for i in range(11, len(years)):
+for i in range(len(years)):
     for j in range (0, len(tables)):
         #Finding link for data table
         properIndex = len(years) - i - 1

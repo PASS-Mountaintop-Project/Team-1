@@ -48,7 +48,7 @@ def getDataSet(api_url, year):
 
 def getData(ID):
     client = Socrata("chronicdata.cdc.gov", None)
-    results_casthma = client.get(ID, stateabbr="PA", measureid = "CASTHMA", limit=10000)
+    results_casthma = client.get(ID, stateabbr="PA", measureid ="CASTHMA", limit=10000)
     results_riskbeh = client.get(ID, stateabbr="PA", categoryid="RISKBEH", limit=10000)
     results_prevent = client.get(ID, stateabbr="PA", categoryid="PREVENT", limit=10000)
 
