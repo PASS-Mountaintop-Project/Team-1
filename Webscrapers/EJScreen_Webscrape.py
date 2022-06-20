@@ -53,14 +53,17 @@ countyButton.click()
 #Find textbox and enter county FIPS code(s)
 time.sleep(5)
 textBox = driver.find_element(By.XPATH, "//input[@type='text'][@name='areaid']")
-textBox.send_keys("42001")
+textBox.send_keys("42001") #Textbox to enter in county FIPS,   NOTE: "42001" is a test FIPS; CHANGE LATER
 textBox.send_keys(Keys.RETURN)
 
 #Extract json content
 time.sleep(7)
 content = driver.find_element(By.ID, "resultjson").text
 parsed_json = json.loads(content)
+
+#TESTING
 print(parsed_json)
 
+#Closing driver and program
 driver.close()
 exit(1)

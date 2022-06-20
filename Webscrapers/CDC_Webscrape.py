@@ -13,7 +13,7 @@ base_name = "PLACES: Local Data for Better Health, Census Tract Data {YEAR}"
 base_file_path = "C:/Mountaintop/API_PLACES_Files" #Change if necessary
 
 fileNames = ["PASS_PLACES_2021"]
-filters = {2021:"year=2019", 2020:"year=2020", "PA":"stateabbr=PA", "limit":"$limit=10000"}
+filters = {2021:"year=2021", 2020:"year=2020", "PA":"stateabbr=PA", "limit":"$limit=10000"}
 years = [2021, 2020] #add more when necessary
 
 #Check if directory exists; if not, create new dir
@@ -53,16 +53,16 @@ def getData(ID):
     results_prevent = client.get(ID, stateabbr="PA", categoryid="PREVENT", limit=10000)
 
     df = pd.DataFrame.from_records(results_casthma)
-    df.to_csv(base_file_path + "/PASS_PLACES_CASTHMA.csv", index=False)
+    df.to_csv(base_file_path + "/PASS_PLACES_2020_CASTHMA.csv", index=False)
 
     df = pd.DataFrame.from_records(results_riskbeh)
-    df.to_csv(base_file_path + "/PASS_PLACES_RISKBEH.csv", index=False)
+    df.to_csv(base_file_path + "/PASS_PLACES_2020_RISKBEH.csv", index=False)
 
     df = pd.DataFrame.from_records(results_prevent)
-    df.to_csv(base_file_path + "/PASS_PLACES_PREVENT.csv", index=False)
+    df.to_csv(base_file_path + "/PASS_PLACES_2020_PREVENT.csv", index=False)
 
 for year in years:
-    name = base_name.replace("{YEAR}", str(year))
+    name = base_name.replace("{YEAR}", str(2020)) #str(year)
     response_Socrata_api = requests.get(Socrata_base_url.replace("{NAME}", name))
 
     if (response_Socrata_api.status_code == 200):
