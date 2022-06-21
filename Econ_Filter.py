@@ -35,7 +35,7 @@ for i in range(67):
     counties_list[i].rename_axis(index="Year", columns="Variables", inplace=True)
     counties_list[i].reset_index(inplace=True)
 
-    #NOTE: FIX <---- Isolates FIPS and County name columns
+    #NOTE: FIX (Consider better ways to get this info into dataset) <---- Isolates FIPS and County name columns
     id_cols = df.iloc[counter:(counter+11), 0:2]
     id_cols.reset_index(drop=True, inplace=True)
     fips_col = id_cols.iloc[:, 0]
