@@ -43,8 +43,8 @@ for i in range(67):
     county_name = str(county_col[0]).replace(', PA', "") #Get county name for csv file name
 
     #Add county column and FIPS columns back to dataframe
-    counties_list[i].insert(0, "GeoFIPS", fips_col)
-    counties_list[i].insert(0, "GeoName", county_col)
+    # counties_list[i].insert(0, "GeoFIPS", fips_col)
+    # counties_list[i].insert(0, "GeoName", county_col)
 
     #Export csv for each county separately
     counties_list[i].to_csv(base_file_path + "/" + county_name + ".csv", index=False)
