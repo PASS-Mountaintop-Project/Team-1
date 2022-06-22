@@ -1,11 +1,22 @@
 import pandas as pd
 import numpy as np
 import re
-from os.path import exists
-from os import mkdir
+from os.path import exists, dirname, abspath
+from os import mkdir, chdir, getcwd
+import os
+
+#Set working dir
+workDir = dirname(dirname(abspath(__file__)))
+chdir(workDir)
+
+#Verify working dir
+verify = input("Working dir is '" + getcwd() + "'. Proceed? (Y/N): ")
+if (not (verify == 'Y' or verify == 'y')):
+    print('Exiting...')
+    exit(1)
 
 #Read in data file (csv)
-df = pd.read_csv(r'./Econ_Files/Economy_Income_2010-2019.csv', header=None)
+df = pd.read_csv('./Raw_data/Econ_Files/Economy_Income_2010-2019.csv', header=None)
 
 #Remove unecessary rows
 df = df[df.iloc[:, 1].notna()]
@@ -17,7 +28,7 @@ df.reset_index(drop=True, inplace=True)
 # print(df)
 
 
-base_file_path = './PASS_Files/Econ'
+base_file_path = './PASS_Data/Econ'
 #Check if directory exists; if not, create new dir
 if (not exists(base_file_path)):
     mkdir(base_file_path)
@@ -52,4 +63,4 @@ for i in range(67):
     #Each county has 35 rows of data
     counter += 35
 
-print ("yay")
+print ("Done")

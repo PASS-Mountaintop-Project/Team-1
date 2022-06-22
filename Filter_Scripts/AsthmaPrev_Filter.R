@@ -1,5 +1,5 @@
 #Read in file paths (divided by each year)
-files <- list.files(path = "C:/Mountaintop/Yearly_Asthma_Files", full.names = TRUE)
+files <- list.files(path = "./Raw_Data/Yearly_Asthma_Files", full.names = TRUE)
 
 
 #dataSets will hold everything, tDataSet will hold each year's data sets
@@ -22,7 +22,7 @@ dropIndex = 1
 rowsDrop = c() #Vector of rows to drop
 headFound = FALSE #Used to find header
 csvNames <- c("Age", "Edu", "Income", "Race", "RaceEth", "Sex(N)", "Sex(P)") #Names of tables
-basePath = "C:/Mountaintop/PASS_Files/Asthma_Prevalence/" #Base file path to upload filtered csv
+basePath = "./PASS_Data/Asthma_Prevalence/" #Base file path to upload filtered csv
 baseFileName = "PASS_" #Base file name for csv file
 
 #Filter out only header and PA data for every data set
