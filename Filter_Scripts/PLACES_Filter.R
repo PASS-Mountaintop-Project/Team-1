@@ -7,7 +7,7 @@ PLACES_DATA <- dplyr::filter(PLACES_DATA, StateDesc=="Pennsylvania")
 #Removing necessary columns
 PLACES_DATA = subset(PLACES_DATA, select = -c(StateAbbr, StateDesc, DataSource, Measure, Data_Value_Footnote_Symbol,
                                               Data_Value_Footnote, Data_Value_Unit, LocationName, Category, Short_Question_Text,
-                                              Data_Value_Type))
+                                              Data_Value_Type, DataValueTypeID))
 
 #Separating longitude and latitude into 2 columns
 PLACES_DATA <- tidyr::extract(PLACES_DATA, Geolocation, c('Latitude', 'Longitude'), "(\\d{2}.\\d{1,}) (\\d{2}.\\d{1,})")
@@ -25,5 +25,5 @@ for (type in types) {
   }
   
   PLACES_TEMP <- subset(PLACES_TEMP, select=-c(CategoryID))
-  write.csv(PLACES_TEMP, file=paste("./PASS_Data/CDC/PLACES/PASS_PLACES_", type, ".csv", sep=""), row.names = FALSE)
+  write.csv(PLACES_TEMP, file=paste("./PASS_Data/CDC/PLACES/PLACES_Ce_", type, "_2021.csv", sep=""), row.names = FALSE)
 }
