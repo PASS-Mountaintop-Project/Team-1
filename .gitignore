@@ -1,0 +1,20 @@
+.venv
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.Rprofile
+Mountaintop.Rproj
+
+# BRFSS_Files
+# EDDIE_Files
+# PASS_Files
+# PLACES_Files
+# Yearly_Asthma_Files
+# API_PLACES_Files
+# Econ_Files
+Raw_Data
+PASS_Data
+
+Extra_Python_Stuff
+launch.json
