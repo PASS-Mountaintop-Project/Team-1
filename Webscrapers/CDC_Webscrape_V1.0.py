@@ -7,7 +7,7 @@ from sodapy import Socrata
 
 #Socrata API hosts various government data
 Socrata_url = "https://api.us.socrata.com/api/catalog/v1?names={}&domains=chronicdata.cdc.gov"
-formats = {"Census": "Ce", "County": "Co", "ZTCA": "ZTCA"}
+formats = {"Census Tract": "Ce", "County": "Co"} #"ZCTA": "ZCTA"
 categories = ["CASTHMA", "RISKBEH", "PREVENT"]
 years = [2021, 2020] #add more when necessary
 
@@ -23,7 +23,7 @@ def getData(ID, form, year):
     
     client = Socrata("chronicdata.cdc.gov", None)
     results_casthma = client.get(ID, stateabbr="PA", measureid="CASTHMA", limit=10000)
-    results_riskbeh = client.get(ID, stateabbr="PA", categoryid="RISKBEH", limit=10000)
+    results_riskbeh = client.get(ID, stateabbr="PA", categoryid= "UNHBEH" if year=="2020" else "RISKBEH", limit=10000)
     results_prevent = client.get(ID, stateabbr="PA", categoryid="PREVENT", limit=10000)
 
     abbr = formats[form]
@@ -36,12 +36,11 @@ def getData(ID, form, year):
     df = pd.DataFrame.from_records(results_prevent)
     df.to_csv(f"{base_dir}/Raw_PLACES_{abbr}_PREVENT_{year}.csv", index=False)
 
-
 for form in formats:
     for year in years:
-        title = f"PLACES: Local Data for Better Health, Census Tract Data {year} release"
+        title = f"PLACES: Local Data for Better Health, {form} Data {year} release"
         response = requests.get(Socrata_url.format(title))
-
+        print(form, year)
         if (response.status_code == 200):
             print('API responded')
             data = response.text
