@@ -1,7 +1,6 @@
 import requests
 import json
 import pandas as pd
-import csv
 from pathlib import Path
 from os import chdir, getcwd
 from sodapy import Socrata
