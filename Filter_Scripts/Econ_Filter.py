@@ -3,7 +3,6 @@ import numpy as np
 import re
 from os.path import exists, dirname, abspath
 from os import mkdir, chdir, getcwd
-import os
 
 #Set working dir
 workDir = dirname(dirname(abspath(__file__)))
@@ -12,8 +11,16 @@ chdir(workDir)
 #Verify working dir
 verify = input("Working dir is '" + getcwd() + "'. Proceed? (Y/N): ")
 if (not (verify == 'Y' or verify == 'y')):
-    print('Exiting...')
-    exit(1)
+    verify = input("Change work dir? (Y|N): ")
+    if (verify == 'Y' or verify == 'y'):
+        workDir = input("Enter new work dir: ")
+        if (not exists(workDir)):
+            print("Dir entered does not exist...exiting")
+            exit(1)
+        chdir(workDir)
+    else:
+        print("Exiting...")
+        exit(1)
 
 #Read in data file (csv)
 df = pd.read_csv('./Raw_data/Econ_Files/Economy_Income_2010-2019.csv', header=None)
