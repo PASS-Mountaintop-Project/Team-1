@@ -39,8 +39,8 @@ def exportYearly(df, begin, end):
     base_file_path = './PASS_Data/Econ/Yearly'
     if (not exists(base_file_path)):
         mkdir(base_file_path)
-    
-    
+
+
     for i in range (year_range):
         counties_list = []
         counter = 0
@@ -52,10 +52,6 @@ def exportYearly(df, begin, end):
             #Transpose the table and ensure year(s) are included
             counties_list.append(county_df.transpose())
             counties_list[j].rename_axis(columns="Variables", inplace=True)
-            
-            #Detecting year
-            # if (j == 0):
-            #     year = int(counties_list[j].index[0])
             
             #Drop year column
             counties_list[j].reset_index(drop=True, inplace=True)
