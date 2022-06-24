@@ -35,7 +35,7 @@ df.reset_index(drop=True, inplace=True)
 # print(df)
 
 
-base_file_path = './PASS_Data/Econ'
+base_file_path = './PASS_Data/Econ/County'
 #Check if directory exists; if not, create new dir
 if (not exists(base_file_path)):
     mkdir(base_file_path)
@@ -45,12 +45,12 @@ counties_list = []
 counter = 0
 for i in range(67):
     #Isolate each county's data
-    county_df = df.iloc[counter:(counter+35), 3:]
+    county_df = df.iloc[counter:counter+35, 3:]
     county_df.set_index("Description", inplace=True)
 
     #Transpose the table and ensure year(s) are included
     counties_list.append(county_df.transpose())
-    counties_list[i].rename_axis(index="Year", columns="Variables", inplace=True)
+    counties_list[i].rename_axis(index="County", columns="Variables", inplace=True)
     counties_list[i].reset_index(inplace=True)
 
     #NOTE: FIX (Consider better ways to get this info into dataset) <---- Isolates FIPS and County name columns
@@ -65,9 +65,7 @@ for i in range(67):
     # counties_list[i].insert(0, "GeoName", county_col)
 
     #Export csv for each county separately
-    counties_list[i].to_csv(base_file_path + "/" + county_name + ".csv", index=False)
+    counties_list[i].to_csv(f"{base_file_path}/{county_name}.csv", index=False)
 
     #Each county has 35 rows of data
     counter += 35
-
-print ("Done")
