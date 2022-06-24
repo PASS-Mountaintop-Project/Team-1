@@ -90,7 +90,7 @@ for i in range(len(years)):
             URL = BASEURL + links[properIndex].replace("default.htm", tables[j])
         
         #New pdf/CSV file name and location on local drive (NOTE: change if necessary)
-        newURL = "C:/Mountaintop/Yearly_Asthma_Files/" + years[len(years) - i - 1] + "/" + names[j]
+        newURL = "C:/Mountaintop/Raw_Data/Yearly_Asthma_Files/" + years[len(years) - i - 1] + "/" + names[j]
 
         #Printing info (for debugging)
         print("--- Number, Year:\t" + str(i) + ", " + years[properIndex] + " ---")
