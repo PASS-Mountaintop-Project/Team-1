@@ -1,30 +1,41 @@
-import pandas as pd
-import numpy as np
-import re
 from os.path import exists, dirname, abspath
 from os import mkdir, chdir, getcwd
 
-#Set working dir
-workDir = dirname(dirname(abspath(__file__)))
-chdir(workDir)
+import pandas as pd
+import numpy as np
 
-#Verify working dir
-verify = input("Working dir is '" + getcwd() + "'. Proceed? (Y/N): ")
-if (not (verify == 'Y' or verify == 'y')):
-    verify = input("Change work dir? (Y|N): ")
-    if (verify == 'Y' or verify == 'y'):
-        workDir = input("Enter new work dir: ")
-        if (not exists(workDir)):
-            print("Dir entered does not exist...exiting")
+
+def verify_work_dir():
+    """Set the working directory to one level above this file's directory, then verify with user."""
+    #Set working dir
+    workDir = dirname(dirname(abspath(__file__)))
+    chdir(workDir)
+
+    #Verify working dir
+    verify = input("Working dir is '" + getcwd() + "'. Proceed? (Y/N): ")
+    if (not (verify == 'Y' or verify == 'y')):
+        verify = input("Change work dir? (Y|N): ")
+        if (verify == 'Y' or verify == 'y'):
+            workDir = input("Enter new work dir: ")
+            if (not exists(workDir)):
+                print("Dir entered does not exist...exiting")
+                exit(1)
+            chdir(workDir)
+        else:
+            print("Exiting...")
             exit(1)
-        chdir(workDir)
-    else:
-        print("Exiting...")
-        exit(1)
 
 
 
 def exportYearly(df, begin, end):
+    """Import BEA Economics File, separate and transpose data for each year, then export each yearly data as CSV.
+
+    Args:
+        df (Pandas Dataframe): Pandas DF with Economics data
+        begin (int): Beginning year of data
+        end (int): Ending year of data
+    """
+    #Identify year span
     year_range = end - begin + 1
     
     #Remove unecessary rows
@@ -41,7 +52,7 @@ def exportYearly(df, begin, end):
         mkdir(base_file_path)
 
 
-    for i in range (year_range):
+    for i in range(year_range):
         counties_list = []
         counter = 0
         for j in range (67):
@@ -79,8 +90,10 @@ def exportYearly(df, begin, end):
 
 
 #Read in data file (csv)
-df = pd.read_csv('./Raw_Data/Econ_Files/Economy_Income_2003-2010.csv', sep=",", header=None)
-exportYearly(df, 2003, 2010)
-df = pd.read_csv('./Raw_Data/Econ_Files/Economy_Income_2010-2019.csv', sep=',', header=None)
-exportYearly(df, 2010, 2019)
-print("-----Done-----")
+if __name__ == "__main__":
+    verify_work_dir()
+    df = pd.read_csv('./Raw_Data/Econ_Files/Economy_Income_2003-2010.csv', sep=",", header=None)
+    exportYearly(df, 2003, 2010)
+    df = pd.read_csv('./Raw_Data/Econ_Files/Economy_Income_2010-2019.csv', sep=',', header=None)
+    exportYearly(df, 2010, 2019)
+    print("-----Done-----")
