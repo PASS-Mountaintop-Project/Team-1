@@ -1,7 +1,7 @@
 from os.path import exists, dirname, abspath
 from os import chdir, getcwd
 
-def verify_work_dir(file_path, work_dir="auto"):
+def verify_work_dir(file_path: str, work_dir: str = "auto") -> str:
     """Set the working directory to one level above the given file's directory, then verify with user.
 
     Args:
