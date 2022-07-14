@@ -1,10 +1,7 @@
 #Reading in csv file(s)
 places_ce_2021 <- read.csv("./Raw_Data/PLACES_Files/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2021_release.csv")
-places_ce_2020 <- read.csv("./Raw_Data/PLACES_Files/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2020_release.csv")
 
 places_co_2021 <- read.csv("./Raw_Data/PLACES_Files/PLACES__Local_Data_for_Better_Health__County_Data_2021_release.csv")
-places_co_2020 <- read.csv("./Raw_Data/PLACES_Files/PLACES__Local_Data_for_Better_Health__County_Data_2020_release.csv")
-
 
 #Selecting relevant rows
 places_ce_2021 <- dplyr::filter(places_ce_2021, StateDesc == "Pennsylvania")

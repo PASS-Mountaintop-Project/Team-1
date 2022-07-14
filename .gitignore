@@ -10,6 +10,6 @@ Mountaintop.Rproj
 Raw_Data
 PASS_Data
 
-Extra_Python_Stuff
+tests/archive
 launch.json
 __pycache__

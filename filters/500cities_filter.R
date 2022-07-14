@@ -7,4 +7,4 @@ five_casthma <- subset(five_casthma, select = -c(StateDesc, StateAbbr, Category,
                                                 CategoryID, MeasureId, Short_Question_Text))
 
 #Writing to file
-write.csv(five_casthma, file="./PASS_Data/CDC/500Cities/PASS_500Cities_Current_Asthma.csv")
+write.csv(five_casthma, file = "./PASS_Data/CDC/500Cities/PASS_500Cities_Current_Asthma.csv")

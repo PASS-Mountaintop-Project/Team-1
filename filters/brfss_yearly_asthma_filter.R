@@ -21,7 +21,7 @@ drop_index <- 1
 drop_rows <- c() #Vector of rows to drop
 found_head <- FALSE #Used to find header
 csv_names <- c("Age", "Edu", "Income", "Race", "RaceEth", "Sex(N)", "Sex(P)") #Names of tables
-base_path <- "./PASS_Data/Asthma_Prevalence/" #Base file path to upload filtered csv
+base_path <- "./PASS_Data/BRFSS_Yearly_Asthma/" #Base file path to upload filtered csv
 base_file_name <- "PASS_" #Base file name for csv file
 
 #Filter out only header and PA data for every data set
