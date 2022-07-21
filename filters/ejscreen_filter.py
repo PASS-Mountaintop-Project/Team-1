@@ -51,7 +51,6 @@ def EJScreen_Filter(years: list[int] = [2015, 2016, 2017, 2018,
         for column in tqdm(df.columns, desc="Finding columns to drop"):
             if (df[column].isnull().all()
                     or (df[column] == 0).all()
-                    or not df[column].apply(str).str.match(".*\\d.*").all()
                     or re.match('.*(OBJECTID|REGION|bin|B_|text|T_|Shape|(a|A)rea|AREA|_cnt|_CNT).*', column)):
                 cols_drop.append(column)
         
@@ -70,5 +69,4 @@ def EJScreen_Filter(years: list[int] = [2015, 2016, 2017, 2018,
 
 
 if __name__ == "__main__":
-    # EJScreen_Filter(years=[2015])
     EJScreen_Filter()
